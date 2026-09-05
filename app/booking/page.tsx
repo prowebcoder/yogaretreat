@@ -1,0 +1,4 @@
+import { BookingForm } from "@/components/booking-form";
+import { PageIntro } from "@/components/page-intro";
+
+export default function BookingPage() { return <main><PageIntro eyebrow="Your next step" title="Let’s make a plan." text="Share a little about what you are looking for. We will respond personally with the right next step, dates, and details." /><section className="booking-layout page-width"><div className="booking-aside"><p className="kicker">A considered beginning</p><p>Every journey starts with a conversation. We do not take payment online yet; our team confirms your experience and availability with you first.</p><p className="booking-contact">info@mysticismyoga.com<br />+918320661954</p></div><BookingForm /></section></main>; }

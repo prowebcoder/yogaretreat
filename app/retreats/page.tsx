@@ -1,0 +1,5 @@
+import Link from "next/link";
+import { PageIntro } from "@/components/page-intro";
+import { retreats } from "@/lib/data/retreats";
+
+export default function RetreatsPage() { return <main><PageIntro eyebrow="Come as you are" title="Retreats shaped around your return." text="There is no one right way to begin. Tell us what you are looking for, and we will help you find an experience that feels honest and possible." /><section className="retreat-list page-width">{retreats.map((retreat) => <article className="retreat-feature" key={retreat.slug}><div><p className="kicker">{retreat.duration} / {retreat.status}</p><h2>{retreat.title}</h2><p>{retreat.summary}</p><Link className="button" href={`/retreats/${retreat.slug}`}>View retreat <span>↗</span></Link></div><ul>{retreat.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul></article>)}</section></main>; }
