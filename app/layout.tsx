@@ -1,17 +1,53 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+import type { Metadata, Viewport } from "next";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
+import { JsonLd, organizationSchema } from "@/components/json-ld";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { WhatsappFab } from "@/components/whatsapp-fab";
 import { site } from "@/lib/data/site";
 
+const fraunces = Fraunces({ subsets: ["latin"], display: "swap", axes: ["SOFT", "WONK"], variable: "--font-fraunces" });
+const manrope = Manrope({ subsets: ["latin"], display: "swap", variable: "--font-manrope" });
+
 export const metadata: Metadata = {
-  title: "Mysticism Yoga | Yoga & Holistic Healing in Rishikesh",
-  description: "Discover your inner peace with ancient yoga techniques and holistic healing at Mysticism Yoga and Wellness Centre in Rishikesh.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: "Mysticism Yoga | Yoga & Holistic Healing Retreats in Rishikesh",
+    template: "%s | Mysticism Yoga",
+  },
+  description:
+    "Yoga retreats, Ayurveda, naturopathy, sound healing, and teacher training at Mysticism Yoga and Wellness Centre in Rishikesh, India.",
+  keywords: ["yoga retreat Rishikesh", "Ayurveda Rishikesh", "yoga teacher training India", "sound healing course", "naturopathy retreat", "meditation retreat India"],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: site.fullName,
+    locale: "en_IN",
+    url: site.url,
+    title: "Mysticism Yoga | Yoga & Holistic Healing Retreats in Rishikesh",
+    description: "Ancient yoga, holistic healing, and a quieter way to spend time in the Yoga Capital of the World.",
+  },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#22372c",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
-      <body><header className="site-header page-width"><Link className="brand" href="/" aria-label="Mysticism Yoga home"><span className="brand-mark">M</span><span>Mysticism<br /><small>Yoga & Wellness</small></span></Link><nav className="desktop-nav" aria-label="Main navigation"><Link href="/retreats">Retreats</Link><Link href="/yoga">Yoga</Link><details className="wellness-menu"><summary>Wellness <span>⌄</span></summary><div><Link href="/ayurveda-therapies">Ayurveda</Link><Link href="/naturopathy-treatments">Naturopathy</Link><Link href="/meditation-and-breathwork">Meditation & breathwork</Link><Link href="/sound-healing-therapies">Sound healing</Link><Link href="/pranic-healing">Pranic healing</Link></div></details><Link href="/about">About</Link><Link href="/accommodation">Stay</Link><Link href="/gallery">Gallery</Link></nav><details className="mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation"><Link href="/retreats">Retreats</Link><Link href="/yoga-retreats">Ongoing retreats</Link><Link href="/yoga">Yoga</Link><span className="mobile-menu-label">Wellness</span><Link href="/ayurveda-therapies">Ayurveda</Link><Link href="/naturopathy-treatments">Naturopathy</Link><Link href="/meditation-and-breathwork">Meditation & breathwork</Link><Link href="/sound-healing-therapies">Sound healing</Link><Link href="/pranic-healing">Pranic healing</Link><Link href="/about">About</Link><Link href="/accommodation">Stay</Link><Link href="/gallery">Gallery</Link><Link href="/contact">Contact</Link></nav></details><Link className="header-book" href="/booking">Book now <span>↗</span></Link></header>{children}<footer className="site-footer"><div className="page-width footer-grid"><div><Link className="brand footer-brand" href="/"><span className="brand-mark">M</span><span>Mysticism<br /><small>Yoga & Wellness</small></span></Link><p className="footer-statement">Ancient practice.<br />A more present life.</p></div><div><p className="kicker light">Explore</p><Link href="/retreats">Retreats</Link><Link href="/yoga-retreats">Ongoing retreats</Link><Link href="/yoga">Yoga</Link><Link href="/healing">Healing</Link><Link href="/about-us">About us</Link></div><div><p className="kicker light">Wellness</p><Link href="/ayurveda-therapies">Ayurveda</Link><Link href="/naturopathy-treatments">Naturopathy</Link><Link href="/sound-healing-course">Sound healing course</Link><Link href="/meditation-and-breathwork">Meditation & breathwork</Link></div><div><p className="kicker light">Find us</p><p>Plot no 30, Nirmal Bag Block C,<br />Pashulok, Rishikesh,<br />Uttarakhand 249204, India</p><a href={`mailto:${site.email}`}>{site.email}</a><a href={`tel:${site.phone}`}>{site.phone}</a></div></div><div className="page-width footer-bottom"><span>© 2025 Mysticism Yoga and Wellness Centre</span><span><a href={site.instagram}>Instagram</a> / <a href={site.facebook}>Facebook</a></span></div></footer></body>
+    <html lang="en" className={`${fraunces.variable} ${manrope.variable}`}>
+      <body>
+        <a className="skip-link" href="#main">Skip to content</a>
+        <JsonLd data={organizationSchema} />
+        <SiteHeader />
+        <span id="main" tabIndex={-1} />
+        {children}
+        <SiteFooter />
+        <WhatsappFab />
+      </body>
     </html>
   );
 }

@@ -1,2 +1,51 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { JsonLd, breadcrumbSchema } from "@/components/json-ld";
 import { PageIntro } from "@/components/page-intro";
-export default function FaqPage() { return <main><PageIntro eyebrow="Questions" title="A little clarity before you arrive." text="Have a question that is not answered here? Our team is happy to help personally." /><section className="faq-list page-width section-pad"><details open><summary>How do I enquire about a retreat?</summary><p>Use our booking form or contact the centre directly. We confirm dates, pricing, and availability with you personally.</p></details><details><summary>Where is Mysticism Yoga?</summary><p>We are at Plot no 30, Nirmal Bag Block C, Pashulok, Rishikesh, Uttarakhand 249204, India.</p></details><details><summary>Can I ask about a personalised experience?</summary><p>Yes. Share what you are looking for and our experienced instructors can guide you toward the right next step.</p></details></section></main>; }
+import { allFaqs, faqGroups } from "@/lib/data/faq";
+
+export const metadata: Metadata = {
+  title: "Frequently Asked Questions",
+  description: "Booking, practice, food, accommodation, visas, and travel — the questions guests ask before a yoga retreat at Mysticism Yoga in Rishikesh.",
+  alternates: { canonical: "/faq" },
+};
+
+export default function FaqPage() {
+  return (
+    <main>
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "FAQ", path: "/faq" }])} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: allFaqs.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: { "@type": "Answer", text: item.answer },
+          })),
+        }}
+      />
+
+      <PageIntro
+        eyebrow="Questions"
+        title="A little clarity before you arrive."
+        text="Have a question that is not answered here? Our team is happy to help personally — ask us anything, including the awkward ones."
+      />
+
+      <section className="faq-list page-width">
+        {faqGroups.map((group) => (
+          <div className="faq-group" key={group.title}>
+            <h2>{group.title}</h2>
+            <FaqAccordion items={group.items} />
+          </div>
+        ))}
+
+        <div className="detail-note" style={{ marginTop: 64 }}>
+          <p className="kicker">Still unsure</p>
+          <p>Write to us with the specific thing you are worried about. We would rather answer it now than have you arrive uncertain. <Link className="contact-link" style={{ display: "inline" }} href="/booking">Ask a question</Link>.</p>
+        </div>
+      </section>
+    </main>
+  );
+}

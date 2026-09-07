@@ -4,15 +4,30 @@ export const site = {
   tagline: "Discover your inner peace",
   description:
     "Ancient yoga techniques and holistic healing practices in the heart of Rishikesh.",
+  url: "https://www.mysticismyoga.com",
   address: "Plot no 30, Nirmal Bag Block C, Pashulok, Rishikesh, Uttarakhand 249204, India",
+  addressLines: ["Plot no 30, Nirmal Bag Block C", "Pashulok, Rishikesh", "Uttarakhand 249204, India"],
+  locality: "Rishikesh",
+  region: "Uttarakhand",
+  postalCode: "249204",
+  country: "IN",
+  geo: { latitude: 30.0869, longitude: 78.2676 },
   email: "info@mysticismyoga.com",
   phone: "+918320661954",
+  phoneDisplay: "+91 83206 61954",
+  whatsapp: "918320661954",
+  founded: "2024",
+  openingHours: "Daily, 06:00 - 20:00 IST",
   instagram: "https://www.instagram.com/mysticismyoga?igsh=cHdwNThxcWNucmI2",
   facebook: "https://www.facebook.com/share/1DJg7psbzL/",
   heroImage:
     "https://img1.wsimg.com/isteam/ip/4e1cda76-6493-41ea-a488-c32202ceca82/1000071989.jpg/:/cr=t:0%25,l:0%25,w:100%25,h:100%25/rs=w:1800,cg:true",
   heroVideo: "",
 } as const;
+
+/** Pre-filled WhatsApp deep link. Text is encoded so it survives the query string. */
+export const whatsappLink = (message = "Hello Mysticism Yoga, I would like to know more about your retreats.") =>
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 
 export type MediaItem = (typeof media)[number];
 
@@ -35,4 +50,12 @@ export const pathways = [
   { label: "Yoga", href: "/yoga", image: media[0].src },
   { label: "Holistic healing", href: "/healing", image: media[3].src },
   { label: "Stay with us", href: "/accommodation", image: media[1].src },
+] as const;
+
+/** Small proof points shown under the hero. Confirm the numbers before publishing. */
+export const stats = [
+  { value: "2024", label: "Founded in Rishikesh" },
+  { value: "7", label: "Wellness disciplines" },
+  { value: "200+", label: "Hours of training" },
+  { value: "1:1", label: "Personal guidance" },
 ] as const;
